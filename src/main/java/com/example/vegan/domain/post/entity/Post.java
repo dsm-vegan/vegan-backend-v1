@@ -1,5 +1,7 @@
 package com.example.vegan.domain.post.entity;
 
+import com.example.vegan.domain.like.entity.Like;
+import com.example.vegan.domain.report.entity.PostReport;
 import com.example.vegan.domain.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -29,4 +32,10 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    private List<Like> likes;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    private List<PostReport> postReports;
 }

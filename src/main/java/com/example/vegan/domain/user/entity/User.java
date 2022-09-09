@@ -1,6 +1,8 @@
 package com.example.vegan.domain.user.entity;
 
+import com.example.vegan.domain.like.entity.Like;
 import com.example.vegan.domain.post.entity.Post;
+import com.example.vegan.domain.report.entity.PostReport;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,4 +33,10 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Post> posts;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Like> likes;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<PostReport> postReports;
 }
