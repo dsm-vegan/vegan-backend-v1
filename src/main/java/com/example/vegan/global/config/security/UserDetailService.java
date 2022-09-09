@@ -1,23 +1,23 @@
-package com.example.vegan.global.config.jwt;
+package com.example.vegan.global.config.security;
 
-
-import com.example.vegan.domain.user.entity.User;
 import com.example.vegan.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+import javax.transaction.Transactional;
+
 @RequiredArgsConstructor
+@Service
 public class UserDetailService implements UserDetailsService {
-
     private final UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(id).orElseThrow(() -> new UsernameNotFoundException(id));
-        return new AuthUserDetail(user);
+    @Transactional
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return (UserDetails) userRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException(username + " -> 데이터베이스에서 찾을 수 없습니다."));
     }
 }

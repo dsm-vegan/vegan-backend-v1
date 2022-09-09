@@ -1,5 +1,6 @@
 package com.example.vegan.global.config.jwt;
 
+import com.example.vegan.global.config.security.UserDetailService;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,10 +13,9 @@ import java.util.Base64;
 import java.util.Date;
 
 @Slf4j
-@RequiredArgsConstructor
 @Component
-public class JwtTokenProvider {
-
+@RequiredArgsConstructor
+public class TokenProvider {
 
     private final UserDetailService userDetailsService;
 
@@ -49,24 +49,17 @@ public class JwtTokenProvider {
     }
 
     public UsernamePasswordAuthenticationToken getAuthentication(String token){
-        UserDetails details =userDetailsService.loadUserByUsername(getId(token));
+        UserDetails details = userDetailsService.loadUserByUsername(getId(token));
         return new UsernamePasswordAuthenticationToken(details, "",details.getAuthorities());
     }
 
-    private boolean validateToken(String token){
-        try{
-            Jwts.parserBuilder().setSigningKey(encodingSecretKey()).build().parseClaimsJws(token);
-            return true;
-        }catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e){
-            log.info("잘못된 jwt 서명입니다");
-        }catch(ExpiredJwtException e){
-            log.info("만료된 jwt 토큰입니다.");
-        }catch (UnsupportedJwtException e){
-            log.info("지원되지 않는 jwt 토큰입니다.");
-        }catch (IllegalStateException e){
-            log.info("jwt 토큰이 잘못되었습니다.");
+    public boolean validateToken(String jwtToken) {
+        try {
+            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
+            return !claims.getBody().getExpiration().before(new Date());
+        } catch (Exception e) {
+            return false;
         }
-        return false;
     }
 
     private String makingToken(String value, String type, Long time){
