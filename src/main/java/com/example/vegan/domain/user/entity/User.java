@@ -39,4 +39,22 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<PostReport> postReports;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Authority authority;
+
+    public User update(String name){
+        this.nickname = name;
+        return this;
+    }
+
+    public void update(String nickname, String introduction){
+        this.nickname = nickname;
+        this.introduction = introduction;
+    }
+
+    public String getRoleKey(){
+        return this.authority.name();
+    }
 }
