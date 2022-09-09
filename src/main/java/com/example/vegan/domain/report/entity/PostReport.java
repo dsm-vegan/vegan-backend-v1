@@ -28,4 +28,8 @@ public class PostReport {
     @ManyToOne
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
+
+    public PostReport(Post post){
+        this.post = post;
+    }
 }
