@@ -10,3 +10,13 @@ spring:
   jpa:
     generate-ddl: false
     show-sql: false
+  security:
+      oauth2:
+        client:
+          registration:
+            google:
+              client-id: <your id>
+              client-secret: your secret>
+              scope:
+                - profile
+                - email
