@@ -49,6 +49,11 @@ public class User {
         return this;
     }
 
+    public void update(String nickname, String introduction){
+        this.nickname = nickname;
+        this.introduction = introduction;
+    }
+
     public String getRoleKey(){
         return this.authority.name();
     }
