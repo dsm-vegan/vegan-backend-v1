@@ -1,22 +1,23 @@
-auth:
-  jwt:
-   secret: ${JWT_SECRET_KEY:}
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    password: ${MYSQL_PASSWORD}
-    url: ${MYSQL_URL}
-    username: ${MYSQL_USERNAME}
+    password: 10210305
+    url: jdbc:mysql://localhost:3306/vegan?serverTimezone=Asia/Seoul
+    username: root
   jpa:
-    generate-ddl: false
-    show-sql: false
+    hibernate:
+       ddl-auto: create-drop
+    properties:
+       hibernate:
+          format_sql: true
+          show_sql: true
   security:
       oauth2:
         client:
           registration:
             google:
-              client-id: <your id>
-              client-secret: your secret>
+              client-id: 855848506200-i0dr7hsjueqfj14d6bdmdgg9btuolu0p.apps.googleusercontent.com
+              client-secret: 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
               scope:
                 - profile
                 - email
