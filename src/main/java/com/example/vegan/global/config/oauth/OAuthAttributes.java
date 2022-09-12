@@ -9,7 +9,7 @@ import java.util.Map;
 
 @Getter
 public class OAuthAttributes {
-    private Map<String, Object> attributes;
+    private Map<String, Object> attributes; // OAuth2 반환하는 유저 정보 Map
     private String nameAttributeKey;
     private String name;
     private String email;
@@ -22,7 +22,9 @@ public class OAuthAttributes {
         this.email = email;
     }
 
-    public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
+    public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes){
+        // 여기서 네이버와 카카오 등 구분 (ofNaver, ofKakao)
+
         return ofGoogle(userNameAttributeName, attributes);
     }
 
@@ -35,11 +37,11 @@ public class OAuthAttributes {
                 .build();
     }
 
-    public User toEntity() {
+    public User toEntity(){
         return User.builder()
                 .nickname(name)
                 .email(email)
-                .authority(Authority.USER)
+                .authority(Authority.USER) // 기본 권한 GUEST
                 .build();
     }
 }

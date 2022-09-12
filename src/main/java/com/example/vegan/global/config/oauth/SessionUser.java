@@ -1,17 +1,17 @@
 package com.example.vegan.global.config.oauth;
 
-import lombok.Builder;
+import com.example.vegan.domain.user.entity.User;
 import lombok.Getter;
 
-@Getter
-public class SessionUser {
+import java.io.Serializable;
 
+@Getter
+public class SessionUser implements Serializable {
     private String name;
     private String email;
 
-    @Builder
-    public SessionUser(String name, String email) {
-        this.name = name;
-        this.email = email;
+    public SessionUser(User user){
+        this.name = user.getNickname();
+        this.email = user.getEmail();
     }
 }

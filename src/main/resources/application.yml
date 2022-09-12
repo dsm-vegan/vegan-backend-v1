@@ -1,12 +1,12 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    password: 10210305
+    password:
     url: jdbc:mysql://localhost:3306/vegan?serverTimezone=Asia/Seoul
     username: root
   jpa:
     hibernate:
-       ddl-auto: create-drop
+       ddl-auto: update
     properties:
        hibernate:
           format_sql: true
@@ -16,8 +16,19 @@ spring:
         client:
           registration:
             google:
-              client-id: 855848506200-i0dr7hsjueqfj14d6bdmdgg9btuolu0p.apps.googleusercontent.com
-              client-secret: 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
+              client-id:
+              client-secret:
               scope:
                 - profile
                 - email
+  cloud:
+    aws:
+      credentials:
+        accessKey:
+        secretKey:
+      s3:
+        bucket: vegan-bucket
+      region:
+        static: ap-northeast-2
+      stack:
+        auto: false

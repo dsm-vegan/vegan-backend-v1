@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,25 +21,25 @@ public class UserService {
 
     @Transactional
     public User getMyInfo(){
-        return userRepository.findById((long) authenticationFacade.getUserId())
+        return userRepository.findByEmail(authenticationFacade.getUserInfo().getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("not found"));
     }
 
     @Transactional
     public List<Post> getMyPost(){
-        User user = userRepository.findById((long) authenticationFacade.getUserId())
+        User user = userRepository.findByEmail(authenticationFacade.getUserInfo().getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("not found"));
         return user.getPosts();
     }
 
     @Transactional
     public void delete(){
-        userRepository.deleteById((long) authenticationFacade.getUserId());
+        userRepository.deleteByEmail(authenticationFacade.getUserInfo().getEmail());
     }
 
     @Transactional
     public void editMyInfo(MyInfoRequest request){
-        User user = userRepository.findById((long) authenticationFacade.getUserId())
+        User user = userRepository.findByEmail(authenticationFacade.getUserInfo().getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("not found"));
         user.update(request.getNickname(), request.getIntroduction());
     }

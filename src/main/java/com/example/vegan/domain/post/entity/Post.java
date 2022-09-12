@@ -1,8 +1,9 @@
 package com.example.vegan.domain.post.entity;
 
-import com.example.vegan.domain.like.entity.Like;
+import com.example.vegan.domain.like.entity.Good;
 import com.example.vegan.domain.report.entity.PostReport;
 import com.example.vegan.domain.user.entity.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,13 +30,15 @@ public class Post {
     @Column
     private String content;
 
+    @JsonIgnoreProperties({"posts"})
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
-    private List<Like> likes;
+    private List<Good> likes;
 
+    @JsonIgnoreProperties(value = {"post","user"})
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<PostReport> postReports;
 

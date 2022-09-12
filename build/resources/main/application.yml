@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: 10210305
+    url: jdbc:mysql://localhost:3306/vegan?serverTimezone=Asia/Seoul
+    username: root
+  jpa:
+    hibernate:
+       ddl-auto: update
+    properties:
+       hibernate:
+          format_sql: true
+          show_sql: true
+  security:
+      oauth2:
+        client:
+          registration:
+            google:
+              client-id: 855848506200-i0dr7hsjueqfj14d6bdmdgg9btuolu0p.apps.googleusercontent.com
+              client-secret: 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
+              scope:
+                - profile
+                - email
+  cloud:
+    aws:
+      credentials:
+        accessKey: AKIA2VH6R4Z36VUWO6VG
+        secretKey: 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
+      s3:
+        bucket: vegan-bucket
+      region:
+        static: ap-northeast-2
+      stack:
+        auto: false
