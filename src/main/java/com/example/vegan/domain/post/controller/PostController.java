@@ -1,11 +1,10 @@
 package com.example.vegan.domain.post.controller;
 
+import com.example.vegan.domain.post.controller.dto.DeleteRequest;
 import com.example.vegan.domain.post.controller.dto.PostRequest;
 import com.example.vegan.domain.post.entity.Post;
 import com.example.vegan.domain.post.service.PostService;
-import com.example.vegan.domain.post.service.S3Upload;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,7 +15,6 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
-    private final S3Upload s3Upload;
 
     @PostMapping("/board")
     public Post create(@RequestBody PostRequest request){
@@ -28,9 +26,9 @@ public class PostController {
         return postService.update(request, id);
     }
 
-    @DeleteMapping("/board/{id}")
-    public void delete(@PathVariable Long id){
-        postService.delete(id);
+    @DeleteMapping("/board")
+    public void delete(@RequestBody DeleteRequest request){
+        postService.delete(request.getPostId(), request.getImageId(), request.getKey());
     }
 
     @GetMapping("/board/{id}")
@@ -43,8 +41,8 @@ public class PostController {
         return postService.search(keyword);
     }
 
-    @PostMapping("/image")
+    @PostMapping("/upload")
     public String upload(MultipartFile multipartFile) throws Exception {
-        return s3Upload.upload(multipartFile);
+        return postService.upload(multipartFile);
     }
 }
