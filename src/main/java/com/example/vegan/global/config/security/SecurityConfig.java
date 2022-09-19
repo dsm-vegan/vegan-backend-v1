@@ -26,9 +26,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()// URL별 권한 권리
                 .antMatchers("/","/css/**","/js/**").permitAll()
-                .antMatchers("/board/**").hasRole(Authority.USER.name())
-                .antMatchers("/admin/**").hasRole(Authority.ADMIN.name())// /api/v1/** 은 USER권한만 접근 가능
-                .anyRequest().authenticated() // anyRequest : 설정된 값들 이외 나머지 URL 나타냄, authenticated : 인증된 사용자
+                .antMatchers("/board/**").permitAll()
+                .antMatchers("/admin/**").permitAll()// /api/v1/** 은 USER권한만 접근 가능
+                .anyRequest().permitAll() // anyRequest : 설정된 값들 이외 나머지 URL 나타냄, authenticated : 인증된 사용자
                 .and()
                 .logout()
                 .logoutSuccessUrl("/")

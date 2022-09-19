@@ -45,4 +45,9 @@ public class PostController {
     public String upload(MultipartFile multipartFile) throws Exception {
         return postService.upload(multipartFile);
     }
+
+    @GetMapping
+    public List<Post> list(){
+        return postService.postList();
+    }
 }

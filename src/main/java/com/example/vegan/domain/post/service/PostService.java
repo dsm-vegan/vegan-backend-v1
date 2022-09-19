@@ -75,4 +75,9 @@ public class PostService {
 
         return amazonS3.getUrl(bucket, s3FileName).toString();
     }
+
+    @Transactional
+    public List<Post> postList(){
+        return postRepository.findAll();
+    }
 }
